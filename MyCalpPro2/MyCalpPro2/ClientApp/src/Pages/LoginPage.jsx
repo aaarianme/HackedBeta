@@ -9,19 +9,28 @@ export default function LoginPage() {
   var handleUserLogin = (resposne) => {
     setUserDataLS(resposne.credential);
   };*/
-  const [userDataLS, setUserDataLS] = useLocalStorageState(
-    "googleAuthToken",
-    {}
-  );
+  const [userDataLS, setUserDataLS] = useLocalStorageState("schoolwork", {});
   const popUpManager = usePopUpManager();
 
   var CLIENT_ID =
     "945650051591-ir08qv0tbcjgpqhl6fiial4a7v4d0iks.apps.googleusercontent.com";
-  var API_KEY = "AIzaSyC5reMT8RZcQxl6hi8emuHyN5axepM-RH8";
+  var API_KEY = "AIzaSyDAfk_sO-uuCoVCzfV0DcMEYhAOc1V5xPU";
   var DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
   var SCOPES = "https://www.googleapis.com/auth/calendar";
+  useEffect(() => {
+    console.log("im changed to", userDataLS);
+    var id = userDataLS.id;
+    if (id == null) return;
+    var request = gapi.client.calendar.events
+      .list({
+        calendarId: id,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  }, [userDataLS]);
 
   /*
   useEffect(() => {
@@ -70,13 +79,10 @@ export default function LoginPage() {
             .list()
             .then((response) => {
               const res = response.result.items;
-              var schoolworkcal = res
-                .filter(
-                  (x) =>
-                    x.summaryOverride == "SchoolWork" ||
-                    x.summary == "SchoolWork"
-                )
-                .first();
+              var schoolworkcal = res.filter(
+                (x) =>
+                  x.summaryOverride == "SchoolWork" || x.summary == "SchoolWork"
+              )[0];
 
               if (schoolworkcal == null) {
                 popUpManager.setPopUp(
@@ -90,6 +96,7 @@ export default function LoginPage() {
                 return;
               }
               console.log("Cals: ", schoolworkcal);
+              setUserDataLS(schoolworkcal);
             });
           /*
           var request = gapi.client.calendar.events.insert({

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import SideMenu from "../components/SideMenu";
 
@@ -31,7 +31,11 @@ export default function DashboardPage() {
 
   const [state, setState] = useState();
 
-  const [userDataLS, setUserDataLS] = useLocalStorageState("todos", {});
+  const [userDataLS, setUserDataLS] = useLocalStorageState("schoolwork", {});
+
+  useEffect(() => {
+    console.log(userDataLS);
+  }, []);
 
   return (
     <div className="flex flex-col">
