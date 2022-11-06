@@ -104,9 +104,12 @@ export default function Nav() {
                 </svg>
               </button>
               <div className="hidden lg:flex items-center">
-                <span className="text-base font-normal bg-green-800 rounded px-3 py-2 text-white mr-5">
-                  SYNCED!
-                </span>
+                {userDataLSEvents != null && (
+                  <span className="text-base font-normal bg-green-800 rounded px-3 py-2 text-white mr-5">
+                    SYNCED!
+                  </span>
+                )}
+
                 <div className="-mb-1">
                   <a
                     className="github-button"
@@ -125,8 +128,7 @@ export default function Nav() {
                 href="/login"
                 className="hidden sm:inline-flex ml-5 bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3"
               >
-                {userDataLS == null && <div>Login</div>}
-                {userDataLS != null && <div></div>}
+                <div>Login</div>
               </a>
             </div>
           </div>

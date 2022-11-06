@@ -114,6 +114,20 @@ export default function Setup() {
               <a href="#" className="text-xl font-medium text-indigo-500"></a>
             </div>
           </div>
+
+          <div className="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-4">
+            <div>
+              <label className="text-gray-800 text-3xl font-semibold">
+                Go Back!
+              </label>
+              <p className="mt-2 text-gray-600"></p>
+            </div>
+            <div className="flex justify-end mt-4">
+              <a href="/" className="text-xl font-medium text-indigo-500">
+                Back
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

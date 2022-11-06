@@ -28,6 +28,7 @@ export default function DashboardPage() {
   );
   useEffect(() => {
     console.log(userDataLSEvents);
+    setState(userDataLSEvents);
     generateArrayOfEvents();
   }, []);
 
@@ -77,9 +78,13 @@ export default function DashboardPage() {
     }
   }
 
-  function makeStudyEvent(arr) {}
+  useEffect(() => {
+    console.log("state is", state);
+    setUserDataLSEvents(state);
+  }, [state]);
 
   var generateArrayOfEvents = () => {
+    if (userDataLSEvents == null) return;
     var arr = [];
     userDataLSEvents.forEach((x) => {
       var eventObj = {};
@@ -100,6 +105,7 @@ export default function DashboardPage() {
 
     let duration = window.prompt("Enter Duration for Event: ", "10");
     if (duration > 10) {
+      window.alert("Enter a duration below 10!");
       return;
     }
     var res = getEventsByDays();
@@ -121,8 +127,9 @@ export default function DashboardPage() {
 
     var periods = splitHandler(duration);
     console.log(periods);
+    var newEv = [];
     for (var i = 0; i < periods.length; i++) {
-      console.log("res is", res);
+      console.log("startDate is", startFromDate);
       var yourDayEvents = res.filter(
         (x) => x.day === startFromDate.getUTCDate()
       );
@@ -135,7 +142,7 @@ export default function DashboardPage() {
         var from = w.start;
 
         if (
-          check.getTime() <= to.getTime() &&
+          check.getTime() <= to?.getTime() &&
           check.getTime() >= from.getTime()
         )
           if (to == null) {
@@ -146,22 +153,26 @@ export default function DashboardPage() {
       });
       var event = {
         id: "calipro",
-        title: "study time",
+        title: "Study Time for " + selectedEvent.title,
         start: startFromDate,
         end: new Date(startFromDate.getTime() + periods[i] * 60 * 60 * 1000),
       };
+
+      newEv.push(event);
+      console.log(event);
+
       startFromDate = new Date(
-        startFromDate.getTime() + periods[i] * 60 * 60 * 1000
+        startFromDate.getTime() + (24 + periods[i]) * 60 * 60 * 1000
       );
-      startFromDate = startFromDate.setDate(startFromDate.getDate() + 1);
     }
+    setState([...state, ...newEv]);
   };
 
   return (
     <div className="flex flex-col">
       <Nav />
       <div className="flex flex-row">
-        <SideMenu />
+        {userDataLSEvents != null && <SideMenu></SideMenu>}
         <div className="px-40 pt-12 w-100">
           <FullCalendar
             plugins={[timeGridPlugin]}
