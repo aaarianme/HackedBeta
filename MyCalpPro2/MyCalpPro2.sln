@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalpPro2", "MyCalpPro2\MyCalpPro2.csproj", "{F26A9B1B-987C-460F-A334-6D36CAE5C882}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F26A9B1B-987C-460F-A334-6D36CAE5C882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26A9B1B-987C-460F-A334-6D36CAE5C882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26A9B1B-987C-460F-A334-6D36CAE5C882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26A9B1B-987C-460F-A334-6D36CAE5C882}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4CF268B4-EF2F-4266-9151-87C62B08840D}
+	EndGlobalSection
+EndGlobal
