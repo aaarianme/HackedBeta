@@ -14,22 +14,13 @@ export default function LoginPage() {
 
   var CLIENT_ID =
     "945650051591-ir08qv0tbcjgpqhl6fiial4a7v4d0iks.apps.googleusercontent.com";
-  var API_KEY = "AIzaSyDAfk_sO-uuCoVCzfV0DcMEYhAOc1V5xPU";
+  var API_KEY = "AIzaSyC_O5ryow9RgQIle5FrCVg9b5c8ZHdUFj0";
   var DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
   var SCOPES = "https://www.googleapis.com/auth/calendar";
   useEffect(() => {
     console.log("im changed to", userDataLS);
-    var id = userDataLS.id;
-    if (id == null) return;
-    var request = gapi.client.calendar.events
-      .list({
-        calendarId: id,
-      })
-      .then((response) => {
-        console.log(response);
-      });
   }, [userDataLS]);
 
   /*
@@ -56,25 +47,13 @@ export default function LoginPage() {
         scope: SCOPES,
         plugin_name: "calAuth", // you may use any custom name here
       });
-      gapi.client.load("calendar", "v3", () => console.log("hi"));
+      gapi.client.load("calendar", "v3", () => console.log("Cal loaded"));
       gapi.auth2
         .getAuthInstance()
         .signIn()
         .then(() => {
-          var event1 = {
-            summary: "Google I/O 2015",
-            location: "800 Howard St., San Francisco, CA 94103",
-            description:
-              "A chance to hear more about Google's developer products.",
-            start: {
-              dateTime: "2022-11-05T09:00:00-07:00",
-              timeZone: "America/Los_Angeles",
-            },
-            end: {
-              dateTime: "2022-11-06T17:00:00-11:00",
-              timeZone: "America/Los_Angeles",
-            },
-          };
+          /*
+          //#region a
           var request = gapi.client.calendar.calendarList
             .list()
             .then((response) => {
@@ -97,13 +76,34 @@ export default function LoginPage() {
               }
               console.log("Cals: ", schoolworkcal);
               setUserDataLS(schoolworkcal);
+              //#endregion
+              */
+
+          //var id = schoolworkcal.id;
+          //console.log(id);
+          var request = gapi.client.calendar.events
+            .list({
+              calendarId:
+                "3eafipn2ngul14ig6nlqd0v62kkd4vrl@import.calendar.google.com",
+              singleEvents: true,
+              timeMin: new Date().toISOString(), //gathers only events not happened yet
+              maxResults: 10,
+              showDeleted: false,
+              orderBy: "startTime",
+            })
+            .then((response) => {
+              const events = response.result;
+              console.log("EVENTS: ", events);
             });
-          /*
+          request.execute(function (event) {
+            console.log(event);
+          });
+        });
+      /*
           var request = gapi.client.calendar.events.insert({
             calendarId: "primary",
             resource: event1,
           });*/
-        });
     });
   };
 
