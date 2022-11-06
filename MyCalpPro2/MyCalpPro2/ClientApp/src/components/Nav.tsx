@@ -104,14 +104,14 @@ export default function Nav() {
                 <div className="-mb-1">
                   <a
                     className="github-button"
-                    href="#"
+                    href="/setup"
                     data-color-scheme="no-preference: dark; light: light; dark: light;"
                     data-icon="octicon-star"
                     data-size="large"
                     data-show-count="true"
                     aria-label="Star themesberg/windster-tailwind-css-dashboard on GitHub"
                   >
-                    Sync status
+                    Setup Help
                   </a>
                 </div>
               </div>

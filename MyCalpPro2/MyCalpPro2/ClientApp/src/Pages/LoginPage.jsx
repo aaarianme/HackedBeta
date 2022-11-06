@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import usePopUpManager from "../Hooks/usePopUpManager";
+import { PopUpTrigger, MessagePopup } from "../components/PopUps";
 import { gapi } from "gapi-script";
 
 export default function LoginPage() {
@@ -11,6 +13,7 @@ export default function LoginPage() {
     "googleAuthToken",
     {}
   );
+  const popUpManager = usePopUpManager();
 
   var CLIENT_ID =
     "945650051591-ir08qv0tbcjgpqhl6fiial4a7v4d0iks.apps.googleusercontent.com";
@@ -34,7 +37,6 @@ export default function LoginPage() {
     });
   }, []);
   */
-
   var loadPopUp = () => {
     gapi.load("client:auth2", () => {
       console.log("loaded");
@@ -64,19 +66,30 @@ export default function LoginPage() {
               timeZone: "America/Los_Angeles",
             },
           };
-          var request = gapi.client.calendar.events
-            .list({
-              calendarId:
-                "3eafipn2ngul14ig6nlqd0v62kkd4vrl@import.calendar.google.com",
-              singleEvents: true,
-              timeMin: new Date().toISOString(), //gathers only events not happened yet
-              maxResults: 10,
-              showDeleted: false,
-              orderBy: "startTime",
-            })
+          var request = gapi.client.calendar.calendarList
+            .list()
             .then((response) => {
-              const events = response.result;
-              console.log("EVENTS: ", events);
+              const res = response.result.items;
+              var schoolworkcal = res
+                .filter(
+                  (x) =>
+                    x.summaryOverride == "SchoolWork" ||
+                    x.summary == "SchoolWork"
+                )
+                .first();
+
+              if (schoolworkcal == null) {
+                popUpManager.setPopUp(
+                  <MessagePopup
+                    onClose={popUpManager.removePopUp}
+                    header="Failed! Google Calendar not in sync"
+                    message={`Your Google Calendar account does not have a SchoolWork calendar. Please follow the setup process.`}
+                    buttonText={`Okay`}
+                  />
+                );
+                return;
+              }
+              console.log("Cals: ", schoolworkcal);
             });
           /*
           var request = gapi.client.calendar.events.insert({
@@ -92,6 +105,7 @@ export default function LoginPage() {
       login
       <div id="signInDiv"></div>
       <button onClick={loadPopUp}>Give us access first</button>
+      <PopUpTrigger manager={popUpManager} />
     </div>
   );
 }
