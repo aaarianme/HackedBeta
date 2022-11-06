@@ -52,7 +52,6 @@ export default function LoginPage() {
         .getAuthInstance()
         .signIn()
         .then(() => {
-          /*
           //#region a
           var request = gapi.client.calendar.calendarList
             .list()
@@ -77,27 +76,26 @@ export default function LoginPage() {
               console.log("Cals: ", schoolworkcal);
               setUserDataLS(schoolworkcal);
               //#endregion
-              */
 
-          //var id = schoolworkcal.id;
-          //console.log(id);
-          var request = gapi.client.calendar.events
-            .list({
-              calendarId:
-                "3eafipn2ngul14ig6nlqd0v62kkd4vrl@import.calendar.google.com",
-              singleEvents: true,
-              timeMin: new Date().toISOString(), //gathers only events not happened yet
-              maxResults: 10,
-              showDeleted: false,
-              orderBy: "startTime",
-            })
-            .then((response) => {
-              const events = response.result;
-              console.log("EVENTS: ", events);
+              var id = schoolworkcal.id;
+              console.log(id);
+              var request = gapi.client.calendar.events
+                .list({
+                  calendarId: id,
+                  singleEvents: true,
+                  timeMin: new Date().toISOString(), //gathers only events not happened yet
+                  maxResults: 10,
+                  showDeleted: false,
+                  orderBy: "startTime",
+                })
+                .then((response) => {
+                  const events = response.result;
+                  console.log("EVENTS: ", events);
+                });
+              request.execute(function (event) {
+                console.log(event);
+              });
             });
-          request.execute(function (event) {
-            console.log(event);
-          });
         });
       /*
           var request = gapi.client.calendar.events.insert({
