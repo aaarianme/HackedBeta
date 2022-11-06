@@ -1,6 +1,12 @@
 import React from "react";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function SideMenu() {
+  const [userDataLS, setUserDataLS] = useLocalStorageState("schoolwork", {});
+  const [userDataLSEvents, setUserDataLSEvents] = useLocalStorageState(
+    "schoolevents",
+    {}
+  );
   return (
     <aside
       id="sidebar"
@@ -53,9 +59,32 @@ export default function SideMenu() {
                   <span className="ml-3 flex-1 whitespace-nowrap">
                     Main calendar
                   </span>
-                  <span className="bg-gray-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">
-                    3
-                  </span>
+                  {
+                    //@ts-ignore
+                    userDataLSEvents.length < 20 ? (
+                      <span
+                        className="bg-gray-200 text-gray-800 ml-3 text-sm font-medium
+                     inline-flex items-center justify-center px-2 rounded-full"
+                      >
+                        {
+                          //@ts-ignore
+                          userDataLSEvents.length
+                        }
+                      </span>
+                    ) : (
+                      <div>
+                        <span
+                          className="bg-red-400 text-gray-800 ml-3 text-sm font-medium
+                     inline-flex items-center justify-center px-2 rounded-full text-white"
+                        >
+                          {
+                            //@ts-ignore
+                            userDataLSEvents.length + "!"
+                          }
+                        </span>
+                      </div>
+                    )
+                  }
                 </a>
               </li>
               <li>

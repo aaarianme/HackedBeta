@@ -1,6 +1,12 @@
 import React from "react";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function Nav() {
+  const [userDataLS, setUserDataLS] = useLocalStorageState("schoolwork", {});
+  const [userDataLSEvents, setUserDataLSEvents] = useLocalStorageState(
+    "schoolevents",
+    {}
+  );
   return (
     <div>
       <nav className="bg-white border-b border-gray-200 w-full">
@@ -98,8 +104,8 @@ export default function Nav() {
                 </svg>
               </button>
               <div className="hidden lg:flex items-center">
-                <span className="text-base font-normal text-gray-500 mr-5">
-                  Username
+                <span className="text-base font-normal bg-green-800 rounded px-3 py-2 text-white mr-5">
+                  SYNCED!
                 </span>
                 <div className="-mb-1">
                   <a
@@ -119,7 +125,8 @@ export default function Nav() {
                 href="/login"
                 className="hidden sm:inline-flex ml-5 bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3"
               >
-                Login
+                {userDataLS == null && <div>Login</div>}
+                {userDataLS != null && <div></div>}
               </a>
             </div>
           </div>
