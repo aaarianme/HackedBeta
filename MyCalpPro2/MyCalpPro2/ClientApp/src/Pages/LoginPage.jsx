@@ -1,26 +1,27 @@
 import React, { useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import { gapi } from "gapi-script";
 
 export default function LoginPage() {
+  /*
   var handleUserLogin = (resposne) => {
     setUserDataLS(resposne.credential);
-  };
+  };*/
   const [userDataLS, setUserDataLS] = useLocalStorageState(
     "googleAuthToken",
     {}
   );
 
-  var gapi = window.gapi;
   var CLIENT_ID =
     "945650051591-ir08qv0tbcjgpqhl6fiial4a7v4d0iks.apps.googleusercontent.com";
   var API_KEY = "";
   var DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
-  var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-  useEffect(() => {
-    /* global google */
+  var SCOPES = "https://www.googleapis.com/auth/calendar";
 
+  /*
+  useEffect(() => {
     google.accounts.id.initialize({
       client_id:
         "945650051591-ir08qv0tbcjgpqhl6fiial4a7v4d0iks.apps.googleusercontent.com",
@@ -32,6 +33,8 @@ export default function LoginPage() {
       size: "large",
     });
   }, []);
+  */
+
   var loadPopUp = () => {
     gapi.load("client:auth2", () => {
       console.log("loaded");
@@ -40,6 +43,7 @@ export default function LoginPage() {
         clientId: CLIENT_ID,
         discoveryDocs: DISCOVERY_DOCS,
         scope: SCOPES,
+        plugin_name: "calAuth", // you may use any custom name here
       });
       gapi.client.load("calendar", "v3", () => console.log("hi"));
       gapi.auth2
