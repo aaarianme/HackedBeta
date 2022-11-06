@@ -42,6 +42,13 @@ export default function LoginPage() {
     });
   }, []);
   */
+
+  /*
+  This Entire page has been built to be able to get user date from google, this code is standard
+  and has essentially been given to us from google we require the user to give us a calendar 
+
+
+  */
   var loadPopUp = () => {
     gapi.load("client:auth2", () => {
       console.log("loaded");
