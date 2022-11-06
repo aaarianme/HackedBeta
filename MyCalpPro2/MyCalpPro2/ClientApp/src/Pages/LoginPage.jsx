@@ -14,7 +14,7 @@ export default function LoginPage() {
 
   var CLIENT_ID =
     "945650051591-ir08qv0tbcjgpqhl6fiial4a7v4d0iks.apps.googleusercontent.com";
-  var API_KEY = "";
+  var API_KEY = "AIzaSyC5reMT8RZcQxl6hi8emuHyN5axepM-RH8";
   var DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
@@ -64,13 +64,25 @@ export default function LoginPage() {
               timeZone: "America/Los_Angeles",
             },
           };
+          var request = gapi.client.calendar.events
+            .list({
+              calendarId:
+                "3eafipn2ngul14ig6nlqd0v62kkd4vrl@import.calendar.google.com",
+              singleEvents: true,
+              timeMin: new Date().toISOString(), //gathers only events not happened yet
+              maxResults: 10,
+              showDeleted: false,
+              orderBy: "startTime",
+            })
+            .then((response) => {
+              const events = response.result;
+              console.log("EVENTS: ", events);
+            });
+          /*
           var request = gapi.client.calendar.events.insert({
             calendarId: "primary",
             resource: event1,
-          });
-          request.execute(function (event) {
-            console.log(event);
-          });
+          });*/
         });
     });
   };
